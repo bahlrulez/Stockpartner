@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import useSWR from "swr";
 import {
   Search,
@@ -638,9 +639,15 @@ export default function Dashboard() {
       )}
 
       {/* Footer */}
-      <footer className="py-6 border-t border-zinc-900 text-center text-[10px] text-zinc-600 font-medium">
-        <p>© 2026 StockWise India Inc. All rights reserved. Real-time indicators simulated for demonstrations.</p>
-        <p className="mt-1">Built with Next.js App Router, Tailwind CSS, Recharts, and SWR.</p>
+      <footer className="py-8 border-t border-zinc-900 text-center text-xs text-zinc-500 font-medium space-y-4">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-2">
+          <Link href="/about-us" className="hover:text-emerald-400 transition-colors">About Us</Link>
+          <Link href="/privacy-policy" className="hover:text-emerald-400 transition-colors">Privacy Policy</Link>
+          <Link href="/terms-and-conditions" className="hover:text-emerald-400 transition-colors">Terms & Conditions</Link>
+          <Link href="/contact-us" className="hover:text-emerald-400 transition-colors">Contact Us</Link>
+        </div>
+        <p className="text-[10px] text-zinc-600">© 2026 StockWise India Inc. All rights reserved. Real-time indicators simulated for demonstrations.</p>
+        <p className="text-[10px] text-zinc-600 mt-1">Built with Next.js App Router, Tailwind CSS, Recharts, and SWR.</p>
       </footer>
     </div>
   );
