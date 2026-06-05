@@ -48,7 +48,7 @@ export default function ContactUs() {
               </div>
             </div>
 
-            <form className="space-y-4 bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/60" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-4 bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/60">
               <div>
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Your Name</label>
                 <input type="text" className="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Jane Doe" />
@@ -61,7 +61,7 @@ export default function ContactUs() {
                 <label className="block text-xs font-bold text-zinc-400 uppercase tracking-wider mb-2">Message</label>
                 <textarea rows={4} className="w-full bg-zinc-900 border border-zinc-800 focus:border-amber-500/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition-colors resize-none" placeholder="How can we help?"></textarea>
               </div>
-              <button className="w-full bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold py-2.5 rounded-xl transition-colors">
+              <button type="button" className="w-full bg-amber-500 hover:bg-amber-400 text-amber-950 font-bold py-2.5 rounded-xl transition-colors">
                 Send Message
               </button>
             </form>
