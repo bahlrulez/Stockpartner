@@ -22,6 +22,7 @@ import StockDetailModal from "@/components/StockDetailModal";
 import IndexSparkline from "@/components/IndexSparkline";
 import TopPerformerBox from "@/components/TopPerformerBox";
 import WorstPerformerBox from "@/components/WorstPerformerBox";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { StockInfo } from "@/lib/stockCache";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -183,6 +184,11 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+      </div>
+      
+      {/* Theme Toggle underneath ticker */}
+      <div className="mt-4 px-4 sm:px-6 w-full max-w-7xl mx-auto flex justify-end">
+        <ThemeToggle />
       </div>
 
       {/* Main Container */}
