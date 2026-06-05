@@ -652,7 +652,7 @@ export default function Dashboard() {
           <Link href="/terms-and-conditions" className="hover:text-emerald-400 transition-colors">Terms & Conditions</Link>
           <Link href="/contact-us" className="hover:text-emerald-400 transition-colors">Contact Us</Link>
         </div>
-        <p className="text-[10px] text-zinc-600">© 2026 StockWise India Inc. All rights reserved. Real-time indicators simulated for demonstrations.</p>
+        <p className="text-[10px] text-zinc-600">© 2026 StockWise India Inc. All rights reserved - Real time Indicators by BAHL</p>
         <p className="text-[10px] text-zinc-600 mt-1">Built with Next.js App Router, Tailwind CSS, Recharts, and SWR.</p>
       </footer>
     </div>
