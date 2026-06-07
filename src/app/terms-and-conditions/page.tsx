@@ -4,7 +4,12 @@ import { ArrowLeft, FileText } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | StockWise",
-  description: "Terms and conditions for using the StockWise platform.",
+  description: "Review the Terms and Conditions for using StockWise, covering user responsibilities, limitations of simulated trading data, and usage guidelines.",
+  openGraph: {
+    title: "Terms & Conditions | StockWise",
+    description: "Review the Terms and Conditions for using StockWise.",
+    url: "/terms-and-conditions",
+  },
 };
 
 export default function TermsAndConditions() {

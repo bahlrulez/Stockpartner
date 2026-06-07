@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -14,8 +15,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StockWise — Indian Stock discovery & Trading Dashboard",
-  description: "A high-performance, mobile-first financial dashboard tracking 50 NSE India stocks. Secure API server caching and real-time market simulation.",
+  metadataBase: new URL("https://stockwise.example.com"),
+  title: {
+    default: "StockWise — Indian Stock Discovery & Trading Dashboard",
+    template: "%s | StockWise",
+  },
+  description: "A high-performance, mobile-first financial dashboard tracking top NSE India stocks. Enjoy secure API server caching, real-time market insights, and simulated trading views.",
+  keywords: ["Indian Stocks", "NSE", "BSE", "Trading Dashboard", "Stock Market", "Finance", "Investment", "Nifty 50", "Live Quotes"],
+  authors: [{ name: "StockWise Team" }],
+  creator: "StockWise",
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://stockwise.example.com",
+    title: "StockWise — Indian Stock Discovery & Trading Dashboard",
+    description: "A high-performance, mobile-first financial dashboard tracking top NSE India stocks.",
+    siteName: "StockWise",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "StockWise — Indian Stock Discovery & Trading Dashboard",
+    description: "A high-performance, mobile-first financial dashboard tracking top NSE India stocks.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
@@ -33,6 +65,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

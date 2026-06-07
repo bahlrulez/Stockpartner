@@ -5,7 +5,12 @@ import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact Us | StockWise",
-  description: "Get in touch with the StockWise team.",
+  description: "Get in touch with the StockWise team for support, feedback, or business inquiries regarding our Indian stock market dashboard.",
+  openGraph: {
+    title: "Contact Us | StockWise",
+    description: "Get in touch with the StockWise team for support or feedback.",
+    url: "/contact-us",
+  },
 };
 
 export default function ContactUs() {

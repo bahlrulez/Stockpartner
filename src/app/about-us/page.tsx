@@ -4,7 +4,12 @@ import { ArrowLeft, Users } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us | StockWise",
-  description: "Learn more about the team behind StockWise.",
+  description: "Learn more about the StockWise team and our mission to democratize Indian stock market data with a lightning-fast, modern dashboard.",
+  openGraph: {
+    title: "About Us | StockWise",
+    description: "Learn more about the StockWise team and our mission to democratize Indian stock market data.",
+    url: "/about-us",
+  },
 };
 
 export default function AboutUs() {

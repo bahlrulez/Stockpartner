@@ -4,7 +4,12 @@ import { ArrowLeft, Shield } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | StockWise",
-  description: "Privacy Policy for StockWise financial dashboard.",
+  description: "Read the StockWise Privacy Policy to understand how we protect your personal information and financial data while using our dashboard.",
+  openGraph: {
+    title: "Privacy Policy | StockWise",
+    description: "Read the StockWise Privacy Policy to understand how we protect your personal information and financial data.",
+    url: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicy() {
