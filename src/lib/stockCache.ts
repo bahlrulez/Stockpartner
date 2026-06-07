@@ -154,6 +154,9 @@ class StockCacheManager {
         low: s.price - (Math.random() * fluctuation),
         open: prevClose + ((Math.random() - 0.5) * fluctuation * 0.5),
         previousClose: prevClose,
+        weekPerf: Number((s.changePercent * 3 + (Math.random() - 0.5) * 5).toFixed(2)),
+        monthPerf: Number((s.changePercent * 8 + (Math.random() - 0.5) * 12).toFixed(2)),
+        yearPerf: Number((s.changePercent * 25 + (Math.random() - 0.5) * 40).toFixed(2)),
         apiSource: "SIMULATED"
       };
     });
@@ -299,7 +302,8 @@ class StockCacheManager {
               const closes = rawCloses.filter((c: any) => c !== null && c !== undefined);
               
               const price = meta.regularMarketPrice ?? closes[closes.length - 1] ?? 0;
-              const prevClose = meta.chartPreviousClose ?? meta.previousClose ?? (closes.length > 1 ? closes[closes.length - 2] : price);
+              // Daily previous close is the second to last element in the closes array
+              const prevClose = closes.length > 1 ? closes[closes.length - 2] : price;
               const change = price - prevClose;
               const changePercent = prevClose !== 0 ? (change / prevClose) * 100 : 0;
 
