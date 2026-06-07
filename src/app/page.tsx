@@ -38,6 +38,7 @@ export default function Dashboard() {
   const [sortBy, setSortBy] = useState<"symbol" | "price" | "change" | "volume" | "marketCap">("change");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [timeframe, setTimeframe] = useState<"1D" | "1W" | "1Y">("1D");
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const [activeSymbol, setActiveSymbol] = useState<string | null>(null);
   const [marketOpen, setMarketOpen] = useState(false);
@@ -111,6 +112,12 @@ export default function Dashboard() {
   const stocks: StockInfo[] = data?.data || [];
   const apiStatus = data?.apiStatus || "SIMULATED";
 
+  const getPerf = (stock: StockInfo) => {
+    if (timeframe === "1W") return stock.weekPerf ?? stock.changePercent;
+    if (timeframe === "1Y") return stock.yearPerf ?? stock.changePercent;
+    return stock.changePercent;
+  };
+
   // Filter stocks based on Search + Tabs
   const filteredStocks = stocks.filter((stock) => {
     const matchesSearch =
@@ -119,8 +126,8 @@ export default function Dashboard() {
 
     if (!matchesSearch) return false;
 
-    if (selectedTab === "gainers") return stock.changePercent > 0;
-    if (selectedTab === "losers") return stock.changePercent < 0;
+    if (selectedTab === "gainers") return getPerf(stock) > 0;
+    if (selectedTab === "losers") return getPerf(stock) < 0;
     if (selectedTab === "watchlist") return watchlist.includes(stock.symbol);
     return true;
   });
@@ -129,6 +136,11 @@ export default function Dashboard() {
   const sortedStocks = [...filteredStocks].sort((a, b) => {
     let aVal: any = a[sortBy];
     let bVal: any = b[sortBy];
+
+    if (sortBy === "change") {
+      aVal = getPerf(a);
+      bVal = getPerf(b);
+    }
 
     if (typeof aVal === "string") {
       return sortOrder === "asc" ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
@@ -459,24 +471,44 @@ export default function Dashboard() {
         </div>
 
         {/* Active Filters / Results Info */}
-        <div className="flex justify-between items-center text-xs text-zinc-500 font-medium">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs text-zinc-500 font-medium">
           <div>
             Showing {sortedStocks.length} of {stocks.length} stocks
           </div>
-          <div className="flex items-center space-x-1.5">
-            <SlidersHorizontal className="w-3.5 h-3.5 text-zinc-500" />
-            <span>Sorted by:</span>
-            <button onClick={() => toggleSort("change")} className={`font-bold hover:text-white ${sortBy === "change" ? "text-emerald-400" : ""}`}>
-              % Change
-            </button>
-            <span>•</span>
-            <button onClick={() => toggleSort("price")} className={`font-bold hover:text-white ${sortBy === "price" ? "text-emerald-400" : ""}`}>
-              Price
-            </button>
-            <span>•</span>
-            <button onClick={() => toggleSort("volume")} className={`font-bold hover:text-white ${sortBy === "volume" ? "text-emerald-400" : ""}`}>
-              Vol
-            </button>
+          
+          <div className="flex flex-wrap items-center gap-4">
+            {/* Timeframe Selector */}
+            <div className="flex items-center p-0.5 bg-zinc-950 border border-zinc-850 rounded-lg">
+              {(["1D", "1W", "1Y"] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTimeframe(t)}
+                  className={`px-2.5 py-1 rounded-md font-bold transition-colors ${
+                    timeframe === t
+                      ? "bg-zinc-800 text-white shadow-sm"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center space-x-1.5">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-zinc-500" />
+              <span>Sorted by:</span>
+              <button onClick={() => toggleSort("change")} className={`font-bold hover:text-white ${sortBy === "change" ? "text-emerald-400" : ""}`}>
+                % Change
+              </button>
+              <span>•</span>
+              <button onClick={() => toggleSort("price")} className={`font-bold hover:text-white ${sortBy === "price" ? "text-emerald-400" : ""}`}>
+                Price
+              </button>
+              <span>•</span>
+              <button onClick={() => toggleSort("volume")} className={`font-bold hover:text-white ${sortBy === "volume" ? "text-emerald-400" : ""}`}>
+                Vol
+              </button>
+            </div>
           </div>
         </div>
 
@@ -514,7 +546,8 @@ export default function Dashboard() {
               /* GRID VIEW */
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {sortedStocks.map((stock) => {
-                  const isStockPositive = stock.change >= 0;
+                  const perf = getPerf(stock);
+                  const isStockPositive = perf >= 0;
                   const isStarred = watchlist.includes(stock.symbol);
                   return (
                     <div
@@ -559,7 +592,7 @@ export default function Dashboard() {
                             }`}
                           >
                             {isStockPositive ? "+" : ""}
-                            {stock.changePercent.toFixed(2)}%
+                            {perf.toFixed(2)}%
                           </span>
                         </div>
                       </div>
@@ -585,7 +618,8 @@ export default function Dashboard() {
                     </thead>
                     <tbody className="divide-y divide-zinc-900 text-xs">
                       {sortedStocks.map((stock) => {
-                        const isStockPositive = stock.change >= 0;
+                        const perf = getPerf(stock);
+                        const isStockPositive = perf >= 0;
                         const isStarred = watchlist.includes(stock.symbol);
                         return (
                           <tr
@@ -619,7 +653,7 @@ export default function Dashboard() {
                               isStockPositive ? "text-emerald-400" : "text-rose-400"
                             }`}>
                               {isStockPositive ? "+" : ""}
-                              {stock.changePercent.toFixed(2)}%
+                              {perf.toFixed(2)}%
                             </td>
                             <td className="py-3 px-4 text-right text-zinc-400 hidden md:table-cell font-medium">
                               {formatVolume(stock.volume)}
